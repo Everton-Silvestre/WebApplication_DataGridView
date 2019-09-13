@@ -2,50 +2,12 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
- <%--   <div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-        <p><a href="http://www.asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Getting started</h2>
-            <p>
-                ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            </p>
-            <p>
-                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>
-                NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-            </p>
-            <p>
-                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>
-                You can easily find a web hosting company that offers the right mix of features and price for your applications.
-            </p>
-            <p>
-                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-            </p>
-        </div>
-    </div>--%>
-
-
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" AllowCustomPaging="true" AllowPaging="true" OnPageIndexChanging="OnPageIndexChanging" PageSize="10">
-<%--    <pagersettings mode="Numeric" position="Bottom" pagebuttoncount="10"/>--%>
-        <pagerstyle 
+        <asp:GridView    ID="GridView1"        runat="server" AllowUserToAddRows="false"    AutoGenerateColumns="false"                  AllowPaging="false"            OnPageIndexChanging="OnPageIndexChanging" >
+            <pagersettings mode="NextPrevious"/>
+     <%--   <pagerstyle 
           height="20px"
           verticalalign="Bottom"
-          horizontalalign="right"/>
+          horizontalalign="right"/>--%>
     <Columns>
         <asp:BoundField ItemStyle-Width="150px" DataField="CustomerID" HeaderText="Customer ID" />
         <asp:BoundField ItemStyle-Width="150px" DataField="ContactName" HeaderText="Contact Name" />
@@ -56,8 +18,15 @@
 
 </asp:GridView>
 
-<asp:TextBox ID="Value2" Columns="2" MaxLength="50" runat="server" />
+<asp:Button id="Button1"
+           Text="Sort Ascending"
+           CommandName="Sort"
+           CommandArgument="Ascending"
+           OnCommand="CommandBtn_Click" 
+           runat="server"/>
 
+<asp:TextBox ID="Value2" Columns="2" MaxLength="50" runat="server" />
+    <asp:TextBox ID="Value3" Columns="2" MaxLength="50" runat="server" />
 </asp:Content>
 
 

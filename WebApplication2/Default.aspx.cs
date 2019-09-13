@@ -51,23 +51,28 @@ namespace WebApplication2
 
             if (!this.IsPostBack)
             {
-                this.BindGrid(GridView1.PageIndex);
+                DataTable dt = new DataTable(); dt.Columns.Add("CustomerID");
+                dt.Columns.Add("ContactName");
+                dt.Columns.Add("City");
+                dt.Columns.Add("Country");
+                this.BindGrid(GridView1.PageIndex , dt);
+
             }
 
         }
 
-        private void BindGrid(int numPag)
+        private void BindGrid(int numPag , DataTable dt)
         {
 
 
-            DataTable dt = new DataTable();
+            //DataTable dt = new DataTable();
 
-            dt.Columns.Add("CustomerID");
-            dt.Columns.Add("ContactName");
-            dt.Columns.Add("City");
-            dt.Columns.Add("Country");
+            //dt.Columns.Add("CustomerID");
+            //dt.Columns.Add("ContactName");
+            //dt.Columns.Add("City");
+            //dt.Columns.Add("Country");
 
-            
+
             if (numPag == 0)
             {
                 for (int i = 0; i < 10; i++)
@@ -83,7 +88,7 @@ namespace WebApplication2
 
                 }
             }
-            else if(numPag == 1) 
+            else if (numPag == 1)
             {
 
                 for (int i = 0; i < 10; i++)
@@ -117,7 +122,6 @@ namespace WebApplication2
                 }
 
             }
-
             else if (numPag == 3)
             {
 
@@ -136,18 +140,24 @@ namespace WebApplication2
 
             }
 
-            GridView1.VirtualItemCount = 30;
+            //GridView1.VirtualItemCount = 30;
+
+            if (GridView1.Rows.Count > 0)
+            {
+                dt.Rows.Add(LinhasDataGrid(dt));
+                dt.Rows.RemoveAt(dt.Rows.Count - 1);
+
+            }
 
 
 
             GridView1.DataSource = dt;
             GridView1.DataBind();
 
+            Value2.Text = GridView1.Rows[GridView1.Rows.Count - 1].Cells[0].Text;
+            Value3.Text = GridView1.Rows.Count.ToString();
+
             //Value2.Text = e.ToString();
-
-
-
-
             //string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
             //using (SqlConnection con = new SqlConnection(constr))
             //{
@@ -221,9 +231,21 @@ namespace WebApplication2
 
         protected void OnPageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+
+
+            if (GridView1.PageIndex < e.NewPageIndex)
+                Value2.Text = "Proximo";
+            else
+                Value2.Text = "Voltando";
+
+
+
+
             GridView1.PageIndex = e.NewPageIndex;
+
+
             //Value2.Text = .ToString();
-            this.BindGrid(e.NewPageIndex);
+            //this.BindGrid(e.NewPageIndex);
             //Search(e.NewPageIndex);
 
         }
@@ -233,16 +255,58 @@ namespace WebApplication2
             //gridView.PageSize = 10;
             //int totalRecords;
             //GridView1.VirtualItemCount = 150;
-            this.BindGrid(pageNo);
+            //this.BindGrid(pageNo);
 
             //Call the Custom Paging Stored Procedure to fetch the records of 
             //the page (value contained by pageNo). The Stored procedure should 
             //return the total number of records. Set the total number of 
             //records to the totalRecords variable.
 
-          
+
             //GridView1.DataSource = myDataTable;
             //GridView1.DataBind();
+        }
+
+        private DataTable LinhasDataGrid(DataTable dt)
+        {
+
+            //List<DataRow> teste = new List<DataRow>();
+
+            //DataTable teste = new DataTable();
+
+            //teste.Columns.Add("CustomerID");
+            //teste.Columns.Add("ContactName");
+            //teste.Columns.Add("City");
+            //teste.Columns.Add("Country");
+
+            foreach (GridViewRow item in GridView1.Rows)
+            {
+                var row = dt.NewRow();             
+
+
+                row["CustomerID"] = item.Cells[0].Text;
+                row["ContactName"] = item.Cells[1].Text;
+                row["City"] = item.Cells[2].Text;
+                row["Country"] = item.Cells[3].Text;
+                dt.Rows.InsertAt(row, 0);
+            }
+
+
+            return dt;
+
+        }
+
+        protected void CommandBtn_Click(Object sender, CommandEventArgs e)
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("CustomerID");
+            dt.Columns.Add("ContactName");
+            dt.Columns.Add("City");
+            dt.Columns.Add("Country");
+
+            this.BindGrid(8, LinhasDataGrid(dt));
         }
     }
 }
