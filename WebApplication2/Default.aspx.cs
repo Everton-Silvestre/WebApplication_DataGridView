@@ -55,13 +55,13 @@ namespace WebApplication2
                 dt.Columns.Add("ContactName");
                 dt.Columns.Add("City");
                 dt.Columns.Add("Country");
-                this.BindGrid(GridView1.PageIndex , dt);
+                this.BindGrid(GridView1.PageIndex, dt);
 
             }
 
         }
 
-        private void BindGrid(int numPag , DataTable dt)
+        private void BindGrid(int numPag, DataTable dt)
         {
 
 
@@ -75,7 +75,7 @@ namespace WebApplication2
 
             if (numPag == 0)
             {
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 50; i++)
                 {
 
                     var row = dt.NewRow();
@@ -281,7 +281,7 @@ namespace WebApplication2
 
             foreach (GridViewRow item in GridView1.Rows)
             {
-                var row = dt.NewRow();             
+                var row = dt.NewRow();
 
 
                 row["CustomerID"] = item.Cells[0].Text;
@@ -306,7 +306,67 @@ namespace WebApplication2
             dt.Columns.Add("City");
             dt.Columns.Add("Country");
 
-            this.BindGrid(8, LinhasDataGrid(dt));
+            //this.BindGrid(8, LinhasDataGrid(dt));
+
+            var lista = new List<int>();
+
+
+            //};
+
+
+            for (int i = 0; i < 146; i++)
+            {
+                lista.Add(i);
+
+            }
+
+            var teste = SplitList(lista);
+
+            var count = teste.Count();
+
+            foreach (var item in teste)
+            {
+                Response.Write("<script>alert('" + item.Count + "')</script>");
+
+                foreach (var valor in item)
+                {
+                    Response.Write("<script>alert('" + valor.ToString() + "')</script>");
+                }
+
+            }
+
         }
+
+        protected void CommandBtn2_Click(Object sender, CommandEventArgs e)
+        {
+
+            var teste = new List<string>();
+
+            foreach (GridViewRow item in GridView1.Rows)
+            {
+                if (item.Cells[4].Text.Equals("S"))
+                    Response.Write("<script>alert('" + item.Cells[4].Text + "')</script>");
+            }
+
+
+            for (int i = 0; i < 30; i++)
+            {
+                GridView1.Rows[i].Cells[4].Text = "S";
+                GridView1.Rows[i].Visible = false;
+            }
+
+        }
+
+        public static IEnumerable<List<T>> SplitList<T>(List<T> locations, int nSize = 50)
+        {
+            for (int i = 0; i < locations.Count; i += nSize)
+            {
+                yield return locations.GetRange(i, Math.Min(nSize, locations.Count - i));
+            }
+        }
+
+
+
+
     }
 }

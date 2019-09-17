@@ -25,6 +25,13 @@
            OnCommand="CommandBtn_Click" 
            runat="server"/>
 
+    <asp:Button id="Button2"
+           Text="Sort Ascending"
+           CommandName="Sort"
+           CommandArgument="Ascending"
+           OnCommand="CommandBtn2_Click" 
+           runat="server"/>
+
 <asp:TextBox ID="Value2" Columns="2" MaxLength="50" runat="server" />
     <asp:TextBox ID="Value3" Columns="2" MaxLength="50" runat="server" />
 </asp:Content>
